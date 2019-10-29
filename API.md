@@ -8,10 +8,18 @@ API overview
 
 ___
 
-## Notes
+## Database
 
 
-######
+![Schema](schema_db.png)
+
+
+
+###### Modify 
+Add, delete and update casting
+
+###### Fetch
+Ask movies and actors data
 
 
 ___
