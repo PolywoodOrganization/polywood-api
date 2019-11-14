@@ -1,5 +1,7 @@
 package com.polywood.api.controller;
 
+import com.polywood.api.auth.Authenticator;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -18,19 +20,16 @@ public class MovieController {
     private final int FILM_SERVICE_PORT = 8081;
     private final String FILM_SERVICE_URL = "http://" + FILM_SERVICE_HOST + ":" + FILM_SERVICE_PORT + "/movies/";
 
-    @GetMapping("/")
-    public ResponseEntity<String> findAllMovies() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        return restTemplate.getForEntity(
-                URI.create(FILM_SERVICE_URL), String.class);
-    }
-
-
     @RequestMapping(value = "", method = GET)
     @ResponseBody
     public ResponseEntity<String> findAllMoviesPaged(
-            @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("sort") Optional<String> sort) {
+            @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("sort") Optional<String> sort, @RequestHeader("Authorization") String token) {
+
+        try {
+            Authenticator.verifyAndDecodeToken(token);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        }
 
         RestTemplate restTemplate = new RestTemplate();
         String url = FILM_SERVICE_URL + "?" +
@@ -44,7 +43,14 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getMovieById(@PathVariable(value = "id") String id) {
+    public ResponseEntity<String> getMovieById(@PathVariable(value = "id") String id, @RequestHeader("Authorization") String token) {
+
+        try {
+            Authenticator.verifyAndDecodeToken(token);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        }
+
         RestTemplate restTemplate = new RestTemplate();
         String url = FILM_SERVICE_URL + id;
 
@@ -53,7 +59,13 @@ public class MovieController {
     }
 
     @GetMapping("/image/{id}")
-    public ResponseEntity<String> getMovieImageById(@PathVariable(value = "id") String id) {
+    public ResponseEntity<String> getMovieImageById(@PathVariable(value = "id") String id, @RequestHeader("Authorization") String token) {
+
+        try {
+            Authenticator.verifyAndDecodeToken(token);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        }
 
         RestTemplate restTemplate = new RestTemplate();
         String url = FILM_SERVICE_URL + "image/" + id;
@@ -63,7 +75,13 @@ public class MovieController {
     }
 
     @GetMapping("/casting/{id}")
-    public ResponseEntity<String>  getMovieCastingById(@PathVariable(value = "id") String id) {
+    public ResponseEntity<String>  getMovieCastingById(@PathVariable(value = "id") String id, @RequestHeader("Authorization") String token) {
+
+        try {
+            Authenticator.verifyAndDecodeToken(token);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        }
 
         RestTemplate restTemplate = new RestTemplate();
         String url = FILM_SERVICE_URL + "casting/" + id;

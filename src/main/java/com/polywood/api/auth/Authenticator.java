@@ -23,15 +23,17 @@ public class Authenticator {
 
     private static final String SECRET_KEY = "scLpAQyKs4C5mlGgG3FYmbb1FVYNuyKi";
     private static final String VERIFICATION_KEY = "i89XgrMlBWbJVaiWRm9fTGrw7z1aAgI1";
+    private static final String ISSUER = "polywood";
 
 
     public static DecodedJWT verifyAndDecodeToken(String token) throws RuntimeException {
         try {
+            token = token.replace("Bearer ", "");
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
 
             //Verify jwt
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withIssuer("polyauto")
+                    .withIssuer(ISSUER)
                     .acceptLeeway(7200)
                     .build(); //Reusable verifier instance
             DecodedJWT jwt = verifier.verify(token);
@@ -71,7 +73,7 @@ public class Authenticator {
                 .withClaim("userId", String.valueOf(user.getIduser()))
                 .withClaim("nonce", nonce)
                 .withClaim("verification", verification)
-                .withIssuer("polywood")
+                .withIssuer(ISSUER)
                 .withIssuedAt(new Date())
                 .sign(algorithm);
     }
