@@ -7,46 +7,43 @@ import com.polywood.api.exceptions.InternalServerErrorException;
 import com.polywood.api.exceptions.UnauthorizedException;
 import com.polywood.api.model.UsersEntity;
 import com.polywood.api.respositories.UsersEntityRepository;
-import com.polywood.api.utils.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.StandardCharsets;
 
 @RestController
 public class AuthController {
-    @Autowired
+
     private UsersEntityRepository usersRepository;
 
+    @Autowired
+    public AuthController(UsersEntityRepository usersRepository){
+        this.usersRepository = usersRepository;
+    }
+
     @CrossOrigin(origins = "*")
-    @RequestMapping(method = RequestMethod.POST, value = "/login", produces = "application/json")
-    public GenericResponse login(@RequestParam String login, @RequestParam String password) throws RuntimeException {
+    @RequestMapping(method = RequestMethod.GET, value = "/login", produces = "application/json")
+    public ResponseEntity<String> login(@RequestParam String login, @RequestParam String password) throws RuntimeException {
         UsersEntity user = usersRepository.findByLogin(login);
 
         if (user == null) {
             throw new UnauthorizedException(); //HTTP 401
         }
 
-        //Check mdp
         String receivedHash = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
 
         if (!receivedHash.equals(user.getPassword())) {
             throw new UnauthorizedException(); //HTTP 401
         }
 
-        GenericResponse response = new GenericResponse();
-
         try {
-            String token = Authenticator.buildToken(user);
-
-            //Renvoi du token à l'api
-            response.addToContent("token", token);
-            response.addToContent("userId", String.valueOf(user.getIdUser()));
-            return response;
+            return new ResponseEntity<>(Authenticator.buildToken(user), HttpStatus.OK);
 
         } catch (JWTCreationException exception) {
             System.out.println(exception.getMessage());
-            //HTTP 500
             throw new InternalServerErrorException();
         }
     }

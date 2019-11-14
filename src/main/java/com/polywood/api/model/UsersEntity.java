@@ -6,20 +6,20 @@ import java.util.Objects;
 @Entity
 @Table(name = "users", schema = "polywood", catalog = "")
 public class UsersEntity {
-    private int idUser;
+    private int iduser;
     private String login;
     private String password;
     private String firstname;
     private String lastname;
 
     @Id
-    @Column(name = "idUser")
-    public int getIdUser() {
-        return idUser;
+    @Column(name = "iduser")
+    public int getIduser() {
+        return iduser;
     }
 
-    public void setIdUser(int idUser) {
-        this.idUser = idUser;
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
     }
 
     @Basic
@@ -67,7 +67,7 @@ public class UsersEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UsersEntity that = (UsersEntity) o;
-        return idUser == that.idUser &&
+        return iduser == that.iduser &&
                 Objects.equals(login, that.login) &&
                 Objects.equals(password, that.password) &&
                 Objects.equals(firstname, that.firstname) &&
@@ -77,6 +77,6 @@ public class UsersEntity {
     @Override
     public int hashCode() {
 
-        return Objects.hash(idUser, login, password, firstname, lastname);
+        return Objects.hash(iduser, login, password, firstname, lastname);
     }
 }

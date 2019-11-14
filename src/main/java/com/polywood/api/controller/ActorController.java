@@ -1,8 +1,6 @@
 package com.polywood.api.controller;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.polywood.api.auth.Authenticator;
-import com.polywood.api.exceptions.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +24,9 @@ public class ActorController {
     public ResponseEntity<String> findAllActors(@RequestParam String token) {
         RestTemplate restTemplate = new RestTemplate();
 
-        try{
+        try {
             Authenticator.verifyAndDecodeToken(token);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
         }
 
@@ -63,7 +61,7 @@ public class ActorController {
     }
 
     @GetMapping("/filmography/{id}")
-    public ResponseEntity<String>  getFilmographyById(@PathVariable(value = "id") String id) {
+    public ResponseEntity<String> getFilmographyById(@PathVariable(value = "id") String id) {
 
         RestTemplate restTemplate = new RestTemplate();
         String url = ACTOR_SERVICE_URL + "filmography/" + id;

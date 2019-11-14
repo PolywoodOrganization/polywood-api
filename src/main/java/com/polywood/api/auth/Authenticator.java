@@ -64,11 +64,11 @@ public class Authenticator {
 
         String nonce = new RandomString(64).nextString();
 
-        String verification = generateVerificationString(user.getLogin(), String.valueOf(user.getIdUser()), nonce);
+        String verification = generateVerificationString(user.getLogin(), String.valueOf(user.getIduser()), nonce);
 
         return JWT.create()
                 .withClaim("user", user.getLogin())
-                .withClaim("userId", String.valueOf(user.getIdUser()))
+                .withClaim("userId", String.valueOf(user.getIduser()))
                 .withClaim("nonce", nonce)
                 .withClaim("verification", verification)
                 .withIssuer("polywood")
