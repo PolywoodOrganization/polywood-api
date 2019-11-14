@@ -31,6 +31,8 @@ Add, delete and update casting
 ###### Fetch
 Ask movies and actors data
 
+***
+
 ## Methods specifications
 
 ### Movies
@@ -72,6 +74,29 @@ Returns a [Movie](#movie).
 | Attribute   | Description         |
 | ----------- | ------------------- |
 | `id`        | imdbid              |
+
+
+#### Getting movies by genre :
+
+    GET /movies/genre/:genre
+
+| Attribute   | Description         |
+| ----------- | ------------------- |
+| `genre`     | movie genre         |
+
+Returns a list of [Movies](#movie).
+
+#### Getting movies by director :
+
+    GET /movies/director/:director
+
+| Attribute   | Description         |
+| ----------- | ------------------- |
+| `director`  | movie director      |
+
+Returns a list of [Movies](#movie).
+
+***
 
 ### Actors
 
