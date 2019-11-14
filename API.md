@@ -3,17 +3,27 @@ API overview
 
 ## Content
 
-- [Notes](#notes)
-- [Methods](#methods)
+- [Notes](#Notes)
+- [Methods](#Methods specifications)
 
 ___
+## Notes
 
-## Database
 
+### Security
+
+Every request for data must have **token** informed in header. 
+
+```html
+Authorization: Bearer <token>
+```
+
+### Database schema
 
 ![Schema](schema_db.png)
 
 
+### Operations 
 
 ###### Modify 
 Add, delete and update casting
@@ -21,10 +31,7 @@ Add, delete and update casting
 ###### Fetch
 Ask movies and actors data
 
-
-___
-### Connect
-
+## Methods specifications
 
 ### Movies
 
@@ -48,7 +55,7 @@ Returns a [Movie](#movie).
 
 | Attribute   | Description         |
 | ----------- | ------------------- |
-| `id`        | ImdbId              |
+| `id`        | imdbid              |
 
 #### Getting a movie image by Id :
 
@@ -56,7 +63,7 @@ Returns a [Movie](#movie).
 
 | Attribute   | Description         |
 | ----------- | ------------------- |
-| `id`        | ImdbId              |
+| `id`        | imdbid              |
 
 #### Getting a movie casting by Id :
 
@@ -64,7 +71,7 @@ Returns a [Movie](#movie).
 
 | Attribute   | Description         |
 | ----------- | ------------------- |
-| `id`        | ImdbId              |
+| `id`        | imdbid              |
 
 ### Actors
 
