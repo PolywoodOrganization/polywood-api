@@ -27,3 +27,19 @@ In order to launch this API on your computer you must :
 - create locally a `polywood` database and import [polywood.sql](#polywood.sql) script
 - launch `polywood-film-service` application
 - launch `polywood-actor-service` application
+
+#### Connect and JWT
+
+Every client application that aims to connect to the API must :
+- connect in the login page
+- save the token response
+- give the token for every server request
+
+Login and password default to connect :
+
+```
+Login: Lea
+Password: secret
+```
+
+*Password is hashed in database with SHA256.*
