@@ -3,7 +3,7 @@
 You can find **API documentation** [there](API.md)
 
 
-### Introduction
+### 👋 Introduction
 
 This is an API for Polywood project that communicate with 2 services :
 > [Movies service](https://github.com/PolywoodOrganization/polywood-film-service)
@@ -15,25 +15,25 @@ This database has been created from IMDB data with [Talend](https://fr.talend.co
 
     API port : 8083
 
-#### Technologies
+#### ⚙️Technologies
 
     Spring Boot
     MySQL
     Maven
 
-#### Launch
+#### 🚀Launch
 
 In order to launch this API on your computer you must :
 - create locally a `polywood` database and import [polywood.sql](polywood.sql) script
 - launch `polywood-film-service` application
 - launch `polywood-actor-service` application
 
-#### Connect and JWT
+#### 🔒 Connect and JWT
 
 Every client application that aims to connect to the API must :
 - connect in the login page
 - save the token response
-- give the token for every server request (put it in the body)
+- give the token for every server request (put it in the authorization header, see the [API](API.md) for more details)
 
 Login and password default to connect :
 
@@ -51,8 +51,13 @@ Password: secret
 
 Icons credits to :
 [Kiranshastry](https://www.flaticon.com/authors/kiranshastry)
+
 [Smashicons](https://www.flaticon.com/authors/smashicons)
+
 [Freepik](https://www.flaticon.com/authors/freepik)
+
 [Srip](https://www.flaticon.com/authors/srip)
+
 [Smartline](https://www.flaticon.com/authors/smartline)
+
 [Dimitry Miroliubov](https://www.flaticon.com/authors/dimitry-miroliubov)
