@@ -4,7 +4,7 @@ API overview
 ## Content
 
 - [Notes](#Notes)
-- [Methods](#Methods specifications)
+- [Methods](#Specifications)
 
 ___
 ## Notes
@@ -33,9 +33,9 @@ Ask movies and actors data
 
 ***
 
-## Methods specifications
+## Specifications
 
-### Movies
+### 🎥 Movies
 
 #### Fetching all movies:
 
@@ -98,7 +98,7 @@ Returns a list of [Movies](#movie).
 
 ***
 
-### Actors
+### 🍿 Actors
 
 #### Fetching all actor:
 
@@ -143,6 +143,8 @@ Returns a [Actor](#actor).
 | `id`        | actorid             |
 
 Return a list of [Movie](#movie)
+
+***
 
 ## Entities
 
