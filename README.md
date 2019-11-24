@@ -6,9 +6,9 @@ You can find **API documentation** [there](API.md)
 ### Introduction
 
 This an API for Polywood project that communicate with 2 services :
-> [Movies service](#https://github.com/PolywoodOrganization/polywood-film-service)
+> [Movies service](https://github.com/PolywoodOrganization/polywood-film-service)
 
-> [Actors service](#https://github.com/PolywoodOrganization/polywood-actor-service)
+> [Actors service](https://github.com/PolywoodOrganization/polywood-actor-service)
 
 This API allow to fetch movies and actors from a bolywood database.
 This database has been created from IMDB data with [Talend](#https://fr.talend.com/) software.
@@ -50,9 +50,9 @@ Password: secret
 ![Schema architecture](Architecture.png)
 
 Icons credits to :
-[Kiranshastry](#https://www.flaticon.com/authors/kiranshastry)
-[Smashicons](#https://www.flaticon.com/authors/smashicons)
-[Freepik](#https://www.flaticon.com/authors/freepik)
-[Srip](#https://www.flaticon.com/authors/srip)
-[Smartline](#https://www.flaticon.com/authors/smartline)
-[Dimitry Miroliubov](#https://www.flaticon.com/authors/dimitry-miroliubov)
+[Kiranshastry](https://www.flaticon.com/authors/kiranshastry)
+[Smashicons](https://www.flaticon.com/authors/smashicons)
+[Freepik](https://www.flaticon.com/authors/freepik)
+[Srip](https://www.flaticon.com/authors/srip)
+[Smartline](https://www.flaticon.com/authors/smartline)
+[Dimitry Miroliubov](https://www.flaticon.com/authors/dimitry-miroliubov)
