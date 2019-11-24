@@ -11,10 +11,10 @@ This an API for Polywood project that communicate with 2 services :
 > [Actors service](#https://github.com/PolywoodOrganization/polywood-actor-service)
 
 This API allow to fetch movies and actors from a bolywood database.
-This database has been created from IMDB data with [Talend](#https://fr.talend.com/) software. 
+This database has been created from IMDB data with [Talend](#https://fr.talend.com/) software.
 
     API port : 8083
-    
+
 #### Technologies
 
     Spring Boot
@@ -43,3 +43,16 @@ Password: secret
 ```
 
 *Password is hashed in database with SHA256.*
+
+
+#### Whole polywood project Organization
+
+![Schema architecture](Architecture.png)
+
+Icons credits to :
+[Kiranshastry](#https://www.flaticon.com/authors/kiranshastry)
+[Smashicons](#https://www.flaticon.com/authors/smashicons)
+[Freepik](#https://www.flaticon.com/authors/freepik)
+[Srip](#https://www.flaticon.com/authors/srip)
+[Smartline](#https://www.flaticon.com/authors/smartline)
+[Dimitry Miroliubov](#https://www.flaticon.com/authors/dimitry-miroliubov)
