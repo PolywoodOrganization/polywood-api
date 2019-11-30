@@ -1,6 +1,11 @@
 -- phpMyAdmin SQL Dump
 -- version 4.7.0
 -- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1
+-- Généré le :  sam. 30 nov. 2019 à 23:42
+-- Version du serveur :  10.1.26-MariaDB
+-- Version de PHP :  7.1.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -3486,6 +3491,28 @@ INSERT INTO `casting` (`movieid`, `actorid`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `favorites`
+--
+
+CREATE TABLE `favorites` (
+  `idfavorite` int(11) NOT NULL,
+  `iduser` int(11) NOT NULL,
+  `idmovie` varchar(45) NOT NULL,
+  `commentary` text NOT NULL,
+  `added` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `favorites`
+--
+
+INSERT INTO `favorites` (`idfavorite`, `iduser`, `idmovie`, `commentary`, `added`) VALUES
+(1, 1, 'tt0273406', 'C\'est vraiment un film que j\'ai aimé !', '2019-11-30'),
+(2, 1, 'tt0256692', 'A revoir en famille !', '2019-11-30');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `movies`
 --
 
@@ -4802,7 +4829,7 @@ INSERT INTO `movies` (`movieid`, `title`, `releaseyear`, `releasedate`, `genre`,
 --
 
 CREATE TABLE `users` (
-  `idUser` int(25) NOT NULL,
+  `iduser` int(25) NOT NULL,
   `login` varchar(25) NOT NULL,
   `password` varchar(70) NOT NULL,
   `firstname` varchar(25) NOT NULL,
@@ -4813,8 +4840,8 @@ CREATE TABLE `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`idUser`, `login`, `password`, `firstname`, `lastname`) VALUES
-(1, 'Lea', '2BB80D537B1DA3E38BD30361AA855686BDE0EACD7162FEF6A25FE97BF527A25B', 'Léa', 'Chemoul');
+INSERT INTO `users` (`iduser`, `login`, `password`, `firstname`, `lastname`) VALUES
+(1, 'Lea', '2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b', 'Léa', 'Chemoul');
 
 --
 -- Index pour les tables déchargées
@@ -4834,6 +4861,14 @@ ALTER TABLE `casting`
   ADD KEY `actorid` (`actorid`);
 
 --
+-- Index pour la table `favorites`
+--
+ALTER TABLE `favorites`
+  ADD PRIMARY KEY (`idfavorite`),
+  ADD KEY `iduser` (`iduser`),
+  ADD KEY `idmovie` (`idmovie`);
+
+--
 -- Index pour la table `movies`
 --
 ALTER TABLE `movies`
@@ -4843,17 +4878,22 @@ ALTER TABLE `movies`
 -- Index pour la table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`idUser`);
+  ADD PRIMARY KEY (`iduser`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
 --
+-- AUTO_INCREMENT pour la table `favorites`
+--
+ALTER TABLE `favorites`
+  MODIFY `idfavorite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUser` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `iduser` int(25) NOT NULL AUTO_INCREMENT;
 --
 -- Contraintes pour les tables déchargées
 --
@@ -4867,6 +4907,13 @@ ALTER TABLE `casting`
   ADD CONSTRAINT `casting_ibfk_3` FOREIGN KEY (`movieid`) REFERENCES `movies` (`movieid`),
   ADD CONSTRAINT `casting_ibfk_4` FOREIGN KEY (`movieid`) REFERENCES `movies` (`movieid`),
   ADD CONSTRAINT `casting_ibfk_5` FOREIGN KEY (`movieid`) REFERENCES `movies` (`movieid`);
+
+--
+-- Contraintes pour la table `favorites`
+--
+ALTER TABLE `favorites`
+  ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`idmovie`) REFERENCES `movies` (`movieid`),
+  ADD CONSTRAINT `fk_foreign_key_fav` FOREIGN KEY (`iduser`) REFERENCES `users` (`idUser`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
