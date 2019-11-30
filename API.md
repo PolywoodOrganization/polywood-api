@@ -146,6 +146,37 @@ Return a list of [Movie](#movie)
 
 ***
 
+### Favorites
+
+#### Fetching all favorites by user id:
+
+    GET /favorites/:id
+
+#### Add a favorite :
+
+    POST /favorites
+
+| Attribute           | Description             |
+|---------------------|-------------------------|
+| `iduser`            | User id                 | 
+| `idmovie`           | Movie id                | 
+| `commentary`        | Commentary about movie  |
+| `added`             | Date favorite added     |
+
+#### Delete a favorite :
+
+    DELETE /favorites
+
+You must send favorite object
+
+| Attribute           | Description             |
+|---------------------|-------------------------|
+| `idfavorite`        | Favorite id             | 
+| `iduser`            | User id                 | 
+| `idmovie`           | Movie id                | 
+| `commentary`        | Commentary about movie  |
+| `added`             | Date favorite added     |
+
 ## Entities
 
 #### Movie
@@ -179,5 +210,15 @@ Return a list of [Movie](#movie)
 |------------------------|----------------------------------------------------------|----------|
 | `movieid`  🔑          | Actor id and primary Key                                 | no       |
 | `actorid`  🔑          | Name of the actor                                        | no       |
+
+#### Favorites
+
+| Attribute              | Description                                  | Nullable |
+|------------------------|----------------------------------------------|----------|
+| `idfavorite` 🔑        | Favorite id                                  | no       |
+| `iduser`  🔑           | User id                                      | no       |
+| `idmovie`  🔑          | Movie id                                     | no       |
+| `commentary`           | Commentary about movie                       | no       |
+| `added`                | Date favorite added                          | no       |
 
 Database was build with Talend with the following [bolywood dataset](https://www.kaggle.com/mitesh58/bollywood-movie-dataset)
