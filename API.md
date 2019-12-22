@@ -35,6 +35,8 @@ Ask movies and actors data
 
 ## Specifications
 
+You'll find a complete and interactive documentation made with swagger [here](http://localhost:8083/swagger-ui.html#/)
+
 ### 🎥 Movies
 
 #### Fetching all movies:
