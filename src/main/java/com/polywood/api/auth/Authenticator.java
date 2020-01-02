@@ -57,6 +57,26 @@ public class Authenticator {
 
     }
 
+    public static String getUserIdFromToken(String token) throws RuntimeException {
+        try {
+            token = token.replace("Bearer ", "");
+            Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withIssuer(ISSUER)
+                    .acceptLeeway(7200)
+                    .build();
+            DecodedJWT jwt = verifier.verify(token);
+
+            String userId = jwt.getClaim("userId").asString();
+            return userId;
+
+        } catch (JWTVerificationException exception) {
+            System.out.println(exception.getMessage());
+            throw new UnauthorizedException();
+        }
+    }
+
     private static String generateVerificationString(String login, String userId, String nonce) {
         return Hashing.sha256().hashString(login + nonce + userId + nonce + VERIFICATION_KEY, StandardCharsets.UTF_8).toString();
     }
