@@ -55,7 +55,7 @@ public class FavoritesController {
     }
 
     @PostMapping("/favorites")
-    public ResponseEntity<String> addFavoritesByUserId(@RequestBody FavoritesDto newFavorite, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<FavoritesEntity> addFavorite(@RequestBody FavoritesDto newFavorite, @RequestHeader("Authorization") String token) {
 
         try {
             Authenticator.verifyAndDecodeToken(token);
@@ -63,15 +63,17 @@ public class FavoritesController {
             throw new UnauthorizedException();
         }
 
+        String id = Authenticator.getUserIdFromToken(token);
+
         FavoritesEntity favoritesEntity = new FavoritesEntity();
-        favoritesEntity.setIduser(newFavorite.getIduser());
+        favoritesEntity.setIduser(Integer.parseInt(id));
         favoritesEntity.setAdded(newFavorite.getAdded());
         favoritesEntity.setCommentary(newFavorite.getCommentary());
         favoritesEntity.setIdmovie(newFavorite.getIdmovie());
 
-        favoritesEntityRepository.save(favoritesEntity);
+        FavoritesEntity saved = favoritesEntityRepository.save(favoritesEntity);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(saved, HttpStatus.OK);
 
     }
 
