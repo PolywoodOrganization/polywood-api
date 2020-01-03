@@ -98,4 +98,24 @@ public class FavoritesController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @DeleteMapping("/favorites/movie/{id}")
+    public ResponseEntity<String> deleteUserFavoriteByMovieId(@PathVariable(value = "id") String idMovie, @RequestHeader("Authorization") String token) {
+
+        try {
+            Authenticator.verifyAndDecodeToken(token);
+        } catch (RuntimeException e) {
+            throw new UnauthorizedException();
+        }
+
+        String id = Authenticator.getUserIdFromToken(token);
+        List<FavoritesEntity> favorites = favoritesEntityRepository.findAllByIduser(Integer.parseInt(id));
+
+        for (FavoritesEntity favorite : favorites) {
+            if (favorite.getIdmovie().equals(idMovie)) {
+                favoritesEntityRepository.delete(favorite);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }
