@@ -77,8 +77,8 @@ public class FavoritesController {
 
     }
 
-    @DeleteMapping("/favorites")
-    public ResponseEntity<String> deleteFavoritesByUserId(@RequestBody int idFavorite, @RequestHeader("Authorization") String token) {
+    @DeleteMapping("/favorites/{id}")
+    public ResponseEntity<String> deleteFavoritesByUserId(@PathVariable(value = "id") String idFavorite, @RequestHeader("Authorization") String token) {
 
         try {
             Authenticator.verifyAndDecodeToken(token);
@@ -90,7 +90,7 @@ public class FavoritesController {
         List<FavoritesEntity> favorites = favoritesEntityRepository.findAllByIduser(Integer.parseInt(id));
         
         for (FavoritesEntity favorite : favorites) {
-            if (favorite.getIdfavorite() == idFavorite) {
+            if (favorite.getIdfavorite() == Integer.parseInt(idFavorite)) {
                 favoritesEntityRepository.delete(favorite);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
