@@ -66,6 +66,11 @@ public class FavoritesController {
         String id = Authenticator.getUserIdFromToken(token);
 
         FavoritesEntity favoritesEntity = new FavoritesEntity();
+
+        if(newFavorite.getIdfavorite() != -1){
+            favoritesEntity.setIdfavorite(newFavorite.getIdfavorite());
+        }
+
         favoritesEntity.setIduser(Integer.parseInt(id));
         favoritesEntity.setAdded(newFavorite.getAdded());
         favoritesEntity.setCommentary(newFavorite.getCommentary());

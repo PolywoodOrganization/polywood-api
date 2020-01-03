@@ -25,11 +25,12 @@ Authorization: Bearer <token>
 
 ### Operations 
 
-###### Modify 
-Add, delete and update casting
+#### Management :
+-	Favorites :	Add – Update – Delete
 
-###### Fetch
-Ask movies and actors data
+#### Ask 
+-	Movies : fetch – search (category, director) - casting
+-	Actors : fethc- search - filmography
 
 ***
 
