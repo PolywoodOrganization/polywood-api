@@ -33,13 +33,13 @@ public class AuthController {
         UsersEntity user = usersRepository.findByLogin(loginForm.getLogin());
 
         if (user == null) {
-            throw new UnauthorizedException(); //HTTP 401
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); //HTTP 401
         }
 
         String receivedHash = Hashing.sha256().hashString(loginForm.getPassword(), StandardCharsets.UTF_8).toString();
 
         if (!receivedHash.equals(user.getPassword())) {
-            throw new UnauthorizedException(); //HTTP 401
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); //HTTP 401
         }
 
         try {
