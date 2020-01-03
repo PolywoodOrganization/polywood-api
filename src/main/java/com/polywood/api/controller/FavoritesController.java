@@ -78,25 +78,24 @@ public class FavoritesController {
     }
 
     @DeleteMapping("/favorites")
-    public ResponseEntity<String> deleteFavoritesByUserId(@RequestBody FavoritesDto newFavorite, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> deleteFavoritesByUserId(@RequestBody int idFavorite, @RequestHeader("Authorization") String token) {
 
         try {
             Authenticator.verifyAndDecodeToken(token);
         } catch (RuntimeException e) {
             throw new UnauthorizedException();
         }
-
-        FavoritesEntity favoritesEntity = new FavoritesEntity();
-        favoritesEntity.setIdfavorite(newFavorite.getIdfavorite());
-        favoritesEntity.setIduser(newFavorite.getIduser());
-        favoritesEntity.setAdded(newFavorite.getAdded());
-        favoritesEntity.setCommentary(newFavorite.getCommentary());
-        favoritesEntity.setIdmovie(newFavorite.getIdmovie());
-
-        favoritesEntityRepository.delete(favoritesEntity);
-
-        return new ResponseEntity<>(HttpStatus.OK);
-
+    
+        String id = Authenticator.getUserIdFromToken(token);
+        List<FavoritesEntity> favorites = favoritesEntityRepository.findAllByIduser(Integer.parseInt(id));
+        
+        for (FavoritesEntity favorite : favorites) {
+            if (favorite.getIdfavorite() == idFavorite) {
+                favoritesEntityRepository.delete(favorite);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }
