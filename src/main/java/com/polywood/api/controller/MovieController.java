@@ -97,6 +97,27 @@ public class MovieController {
                 URI.create(url), String.class);
     }
 
+    @GetMapping("/title/{title}")
+    public ResponseEntity<String> getMoviesByTitle(@PathVariable(value = "title") String title, @RequestHeader("Authorization") String token) {
+
+        try {
+            Authenticator.verifyAndDecodeToken(token);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        }
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = null;
+        try {
+            url = FILM_SERVICE_URL + "title/" + URLEncoder.encode(title, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong parameters format");
+        }
+
+        return restTemplate.getForEntity(
+                URI.create(url), String.class);
+    }
+
     @GetMapping("/image/{id}")
     public ResponseEntity<String> getMovieImageById(@PathVariable(value = "id") String id, @RequestHeader("Authorization") String token) {
 
