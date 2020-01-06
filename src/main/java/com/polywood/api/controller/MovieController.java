@@ -61,7 +61,8 @@ public class MovieController {
     }
 
     @GetMapping("/genre/{genre}")
-    public ResponseEntity<String> getMoviesByGenre(@PathVariable(value = "genre") String genre, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> getMoviesByGenre(@PathVariable(value = "genre") String genre,
+    @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("sort") Optional<String> sort,@RequestHeader("Authorization") String token) {
 
         try {
             Authenticator.verifyAndDecodeToken(token);
@@ -70,14 +71,18 @@ public class MovieController {
         }
 
         RestTemplate restTemplate = new RestTemplate();
-        String url = FILM_SERVICE_URL + "genre/" + genre;
+        String url = FILM_SERVICE_URL + "genre/" + genre + "?" +
+                "page=" + page.orElse(0) +
+                "&size=" + size.orElse(Integer.MAX_VALUE) +
+                "&sort=" + sort.orElse("title");;
 
         return restTemplate.getForEntity(
                 URI.create(url), String.class);
     }
 
     @GetMapping("/director/{director}")
-    public ResponseEntity<String> getMoviesByDirector(@PathVariable(value = "director") String director, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> getMoviesByDirector(@PathVariable(value = "director") String director,
+    @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("sort") Optional<String> sort, @RequestHeader("Authorization") String token) {
 
         try {
             Authenticator.verifyAndDecodeToken(token);
@@ -88,7 +93,10 @@ public class MovieController {
         RestTemplate restTemplate = new RestTemplate();
         String url = null;
         try {
-            url = FILM_SERVICE_URL + "director/" + URLEncoder.encode(director, "UTF-8");
+            url = FILM_SERVICE_URL + "director/" + URLEncoder.encode(director, "UTF-8") + "?" +
+                    "page=" + page.orElse(0) +
+                    "&size=" + size.orElse(Integer.MAX_VALUE) +
+                    "&sort=" + sort.orElse("title");;
         } catch (UnsupportedEncodingException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong parameters format");
         }
@@ -98,7 +106,8 @@ public class MovieController {
     }
 
     @GetMapping("/title/{title}")
-    public ResponseEntity<String> getMoviesByTitle(@PathVariable(value = "title") String title, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<String> getMoviesByTitle(@PathVariable(value = "title") String title,
+    @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("sort") Optional<String> sort, @RequestHeader("Authorization") String token) {
 
         try {
             Authenticator.verifyAndDecodeToken(token);
@@ -109,7 +118,10 @@ public class MovieController {
         RestTemplate restTemplate = new RestTemplate();
         String url = null;
         try {
-            url = FILM_SERVICE_URL + "title/" + URLEncoder.encode(title, "UTF-8");
+            url = FILM_SERVICE_URL + "title/" + URLEncoder.encode(title, "UTF-8") + "?" +
+                    "page=" + page.orElse(0) +
+                    "&size=" + size.orElse(Integer.MAX_VALUE) +
+                    "&sort=" + sort.orElse("title");
         } catch (UnsupportedEncodingException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong parameters format");
         }
