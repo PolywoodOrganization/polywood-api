@@ -4830,11 +4830,12 @@ INSERT INTO `movies` (`movieid`, `title`, `releaseyear`, `releasedate`, `genre`,
 
 CREATE TABLE `users` (
   `iduser` int(25) NOT NULL,
-  `login` varchar(25) NOT NULL,
+  `login` varchar(25) UNIQUE NOT NULL,
   `password` varchar(70) NOT NULL,
   `firstname` varchar(25) NOT NULL,
   `lastname` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 --
 -- Déchargement des données de la table `users`
