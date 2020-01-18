@@ -43,6 +43,21 @@ public class MovieController {
                 URI.create(url), String.class);
 
     }
+    
+    @RequestMapping(value = "/maxPage", method = GET)
+    public ResponseEntity<String> getAllMoviesPages(@RequestParam("size") Optional<Integer> size, @RequestHeader("Authorization") String token) {
+        try {
+            Authenticator.verifyAndDecodeToken(token);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        }
+    
+        RestTemplate restTemplate = new RestTemplate();
+        String url = FILM_SERVICE_URL + "maxPage?size=" + size.orElse(Integer.MAX_VALUE);
+    
+        return restTemplate.getForEntity(
+                URI.create(url), String.class);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<String> getMovieById(@PathVariable(value = "id") String id, @RequestHeader("Authorization") String token) {
