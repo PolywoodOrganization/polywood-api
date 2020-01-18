@@ -58,7 +58,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/user/{id}")
+    @PutMapping("/users/{id}")
     public ResponseEntity<UsersEntity> updateUser(@PathVariable(value = "id") String id, @RequestBody UsersEntity newUser, @RequestHeader("Authorization") String token) {
 
         try {
@@ -76,5 +76,22 @@ public class AuthController {
 
         return new ResponseEntity<>(saved, HttpStatus.OK);
 
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<UsersEntity> addUser(@RequestBody UsersEntity newUser) {
+
+        if(newUser.getLogin()== null || newUser.getPassword() == null) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        String hashed = Hashing.sha256().hashString(newUser.getPassword(), StandardCharsets.UTF_8).toString();
+        newUser.setPassword(hashed);
+
+        try {
+            UsersEntity saved = usersRepository.save(newUser);
+            return new ResponseEntity<>(saved, HttpStatus.OK);
+        } catch(Exception e) {
+            throw new InternalServerErrorException();
+        }
     }
 }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "users", schema = "polywood", catalog = "")
+@Table(name = "users", schema = "polywood")
 public class UsersEntity {
     private int iduser;
     private String login;
@@ -12,22 +12,20 @@ public class UsersEntity {
     private String firstname;
     private String lastname;
 
-    @Id
+    @Id @GeneratedValue(strategy= javax.persistence.GenerationType.IDENTITY)
     @Column(name = "iduser")
     public int getIduser() {
         return iduser;
     }
-
     public void setIduser(int iduser) {
         this.iduser = iduser;
     }
 
     @Basic
-    @Column(name = "login")
+    @Column(name = "login", unique = true)
     public String getLogin() {
         return login;
     }
-
     public void setLogin(String login) {
         this.login = login;
     }
@@ -37,7 +35,6 @@ public class UsersEntity {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }

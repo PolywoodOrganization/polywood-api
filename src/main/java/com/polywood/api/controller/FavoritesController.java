@@ -85,6 +85,7 @@ public class FavoritesController {
     @DeleteMapping("/favorites/{id}")
     public ResponseEntity<String> deleteFavoritesByUserId(@PathVariable(value = "id") String idFavorite, @RequestHeader("Authorization") String token) {
 
+
         try {
             Authenticator.verifyAndDecodeToken(token);
         } catch (RuntimeException e) {
