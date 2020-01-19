@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.util.Optional;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -88,5 +90,29 @@ public class ActorController {
         return restTemplate.getForEntity(
                 URI.create(url), String.class);
     }
-
+    
+    @GetMapping("/name/{name}")
+    public ResponseEntity<String> getActorsByName(@PathVariable(value = "name") String name,
+                                                   @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam("sort") Optional<String> sort, @RequestHeader("Authorization") String token) {
+        
+        try {
+            Authenticator.verifyAndDecodeToken(token);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        }
+        
+        RestTemplate restTemplate = new RestTemplate();
+        String url = null;
+        try {
+            url = ACTOR_SERVICE_URL + "name/" + URLEncoder.encode(name, "UTF-8") + "?" +
+                    "page=" + page.orElse(0) +
+                    "&size=" + size.orElse(Integer.MAX_VALUE) +
+                    "&sort=" + sort.orElse("name");
+        } catch (UnsupportedEncodingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Wrong parameters format");
+        }
+        
+        return restTemplate.getForEntity(
+                URI.create(url), String.class);
+    }
 }
