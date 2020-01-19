@@ -44,8 +44,8 @@ public class MovieController {
 
     }
     
-    @RequestMapping(value = "/maxPage", method = GET)
-    public ResponseEntity<String> getAllMoviesPages(@RequestParam("size") Optional<Integer> size, @RequestHeader("Authorization") String token) {
+    @RequestMapping(value = "/maxPage/{size}", method = GET)
+    public ResponseEntity<String> getAllMoviesPages(@PathVariable("size") Integer size, @RequestParam("search") Optional<String> search, @RequestHeader("Authorization") String token) {
         try {
             Authenticator.verifyAndDecodeToken(token);
         } catch (RuntimeException e) {
@@ -53,7 +53,9 @@ public class MovieController {
         }
     
         RestTemplate restTemplate = new RestTemplate();
-        String url = FILM_SERVICE_URL + "maxPage?size=" + size.orElse(Integer.MAX_VALUE);
+        String url = FILM_SERVICE_URL + "maxPage/" + size;
+        if (search.isPresent())
+            url += "?search=" + search.get().replace("+"," ");
     
         return restTemplate.getForEntity(
                 URI.create(url), String.class);

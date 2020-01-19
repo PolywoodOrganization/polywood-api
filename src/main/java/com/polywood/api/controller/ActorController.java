@@ -44,8 +44,8 @@ public class ActorController {
 
     }
     
-    @RequestMapping(value = "/maxPage", method = GET)
-    public ResponseEntity<String> getAllActorsPages(@RequestParam("size") Optional<Integer> size, @RequestHeader("Authorization") String token) {
+    @RequestMapping(value = "/maxPage/{size}", method = GET)
+    public ResponseEntity<String> getAllActorsPages(@PathVariable("size") Optional<Integer> size, @RequestParam("search") Optional<String> search, @RequestHeader("Authorization") String token) {
         try {
             Authenticator.verifyAndDecodeToken(token);
         } catch (RuntimeException e) {
@@ -53,7 +53,9 @@ public class ActorController {
         }
         
         RestTemplate restTemplate = new RestTemplate();
-        String url = ACTOR_SERVICE_URL + "maxPage?size=" + size.orElse(Integer.MAX_VALUE);
+        String url = ACTOR_SERVICE_URL + "maxPage/" + size.orElse(Integer.MAX_VALUE);
+        if (search.isPresent())
+            url += "?search=" + search.get().replace("+"," ");
         
         return restTemplate.getForEntity(
                 URI.create(url), String.class);
