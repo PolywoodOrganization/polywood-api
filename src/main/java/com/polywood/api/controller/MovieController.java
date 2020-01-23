@@ -178,6 +178,26 @@ public class MovieController {
         return restTemplate.getForEntity(
                 URI.create(url), String.class);
     }
-
-
+    
+    @GetMapping("/search/{keywords}")
+    public ResponseEntity<String> getMoviesByKeywords(@PathVariable(value = "keywords") String keywords,
+                                                      @RequestParam("page") Optional<Integer> page,
+                                                      @RequestParam("size") Optional<Integer> size,
+                                                      @RequestParam("sort") Optional<String> sort,
+                                                      @RequestHeader("Authorization") String token) {
+        try {
+            Authenticator.verifyAndDecodeToken(token);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        }
+        
+        RestTemplate restTemplate = new RestTemplate();
+        String url = FILM_SERVICE_URL + "search/" + keywords + "?" +
+                "page=" + page.orElse(0) +
+                "&size=" + size.orElse(Integer.MAX_VALUE) +
+                "&sort=" + sort.orElse("title");
+        
+        return restTemplate.getForEntity(
+                URI.create(url), String.class);
+    }
 }
