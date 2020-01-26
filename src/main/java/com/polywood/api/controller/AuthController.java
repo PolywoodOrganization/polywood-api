@@ -81,7 +81,7 @@ public class AuthController {
     @PostMapping("/users")
     public ResponseEntity<UsersEntity> addUser(@RequestBody UsersEntity newUser) {
 
-        if(newUser.getLogin()== null || newUser.getPassword() == null) {
+        if(newUser.getLogin().equals("") || newUser.getPassword().equals("")) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
         String hashed = Hashing.sha256().hashString(newUser.getPassword(), StandardCharsets.UTF_8).toString();
